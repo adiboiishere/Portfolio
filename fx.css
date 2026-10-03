@@ -1,0 +1,58 @@
+/* Animation layer: loads after styles.css */
+:root{--cy:#22d3ee;--vi:#8b5cf6}
+@property --a{syntax:'<angle>';initial-value:0deg;inherits:false}
+body{overflow-x:hidden}
+#net{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+#prog{position:fixed;top:0;left:0;height:3px;width:0;z-index:60;background:linear-gradient(90deg,var(--blue),var(--cy),var(--vi));box-shadow:0 0 14px var(--cy)}
+/* boot */
+#boot{position:fixed;inset:0;z-index:100;background:#040a15;display:grid;place-items:center;animation:bootOut .6s 4s forwards}
+#boot.off{opacity:0;visibility:hidden;transition:opacity .7s,visibility .7s}
+.boot-in{width:min(340px,80vw);text-align:center}.boot-in b{font-size:30px;letter-spacing:.14em;display:block;margin-bottom:22px;animation:glitch 1.6s infinite}.boot-in b span{color:var(--cy)}
+.bar{height:3px;background:#12263e;border-radius:3px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--cy));box-shadow:0 0 12px var(--cy)}
+.boot-in small{display:block;margin-top:14px;color:var(--cy);font:12px Consolas,monospace}
+@keyframes bootOut{to{opacity:0;visibility:hidden}}
+@keyframes glitch{0%,90%,100%{text-shadow:none;transform:none}92%{text-shadow:3px 0 #f0f,-3px 0 var(--cy);transform:translateX(2px)}95%{text-shadow:-3px 0 #f0f,3px 0 var(--cy);transform:translateX(-2px)}}
+/* cursor */
+#cur,#cur2{display:none}
+@media(pointer:fine){body{cursor:none}a,button{cursor:none}
+#cur,#cur2{display:block;position:fixed;top:0;left:0;pointer-events:none;z-index:90;border-radius:50%}
+#cur{width:7px;height:7px;margin:-3.5px 0 0 -3.5px;background:var(--cy);box-shadow:0 0 14px var(--cy)}
+#cur2{width:38px;height:38px;margin:-19px 0 0 -19px;border:1px solid #22d3ee88;transition:width .25s,height .25s,margin .25s,background .25s}
+#cur2.hv{width:64px;height:64px;margin:-32px 0 0 -32px;background:#22d3ee14;border-color:var(--cy)}}
+/* hero */
+h1 em{background:linear-gradient(90deg,var(--blue),var(--cy),var(--vi),var(--blue));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:flow 6s linear infinite}
+@keyframes flow{to{background-position:300% 0}}
+.role-line{font:600 20px Consolas,monospace;color:var(--cy);margin:0 0 14px;min-height:30px}.caret{display:inline-block;width:2px;height:1.1em;background:var(--cy);margin-left:3px;vertical-align:-3px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.profile-card::before{content:"";position:absolute;inset:0;padding:2px;border-radius:20px;background:conic-gradient(from var(--a),transparent 0 55%,var(--cy),var(--vi),transparent);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 5s linear infinite;z-index:3;pointer-events:none}
+@keyframes spin{to{--a:360deg}}
+.scan{position:absolute;left:0;right:0;top:-90px;height:90px;z-index:2;pointer-events:none;background:linear-gradient(transparent,#22d3ee33,transparent);border-bottom:1px solid #22d3ee88;animation:scan 4.5s linear infinite}
+@keyframes scan{to{top:100%}}
+.hud{position:absolute;top:14px;left:14px;z-index:4;display:flex;align-items:center;gap:7px;font:600 10px Consolas,monospace;color:var(--cy);background:#06101fcc;padding:7px 10px;border-radius:7px;border:1px solid #22d3ee55}
+.hud u{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 var(--green);animation:ping 1.6s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 8px #32d58300}}
+.code{animation:float 6s ease-in-out infinite}.code pre{text-shadow:0 0 12px #22d3ee33}
+@keyframes float{50%{transform:translateY(-10px)}}
+/* marquee */
+.marquee{overflow:hidden;border-block:1px solid var(--line);padding:18px 0;background:#08152633;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.track{display:flex;width:max-content;animation:mq 34s linear infinite}.marquee:hover .track{animation-play-state:paused}
+.track span{margin-right:48px;font:700 15px Inter,sans-serif;color:#5f7da1;white-space:nowrap}.track span::before{content:"◆";color:var(--cy);margin-right:14px;font-size:9px}
+@keyframes mq{to{transform:translateX(-50%)}}
+/* reveal */
+.rv{opacity:0;transform:translateY(40px) scale(.97);filter:blur(10px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1),filter .8s;transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none;filter:none}
+.rv.done{transition-delay:0s}
+.card.done,.profile-card.done{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .18s,border-color .3s,box-shadow .3s}
+.eyebrow::before{content:"";display:inline-block;width:0;height:1px;background:var(--cy);vertical-align:middle;transition:width .9s .2s,margin .9s .2s}.eyebrow.in::before{width:34px;margin-right:12px}
+/* cards: spotlight + glow */
+.card,.facts>div{position:relative;overflow:hidden}
+.card::after,.facts>div::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%),#22d3ee1f,transparent 60%)}
+.card:hover::after,.facts>div:hover::after{opacity:1}
+.card:hover{border-color:#22d3ee66;box-shadow:0 20px 60px #22d3ee14}
+.chips i{transition:transform .25s,box-shadow .25s,color .25s}.chips i:hover{transform:translateY(-3px);color:var(--cy);box-shadow:0 0 16px #22d3ee44}
+.cert-icon{animation:pulse 3s infinite}@keyframes pulse{50%{box-shadow:0 0 18px #4f8cff55}}
+.timeline li{transition:transform .25s}.timeline li:hover{transform:translateX(8px);color:#fff}
+.btn{transition:transform .2s,box-shadow .3s,border-color .3s}.btn.primary{box-shadow:0 0 28px #4f8cff55}.btn:hover{border-color:var(--cy);box-shadow:0 0 30px #22d3ee55}
+nav a{position:relative}nav a.active{color:#fff}nav a::after{content:"";position:absolute;left:0;bottom:-6px;height:2px;width:0;background:var(--cy);transition:width .3s}nav a.active::after{width:100%}
+.facts strong{text-shadow:0 0 22px #4f8cff66}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none;filter:none}#boot{display:none}}
